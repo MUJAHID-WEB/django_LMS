@@ -89,6 +89,7 @@ from .import views
    -- extend base files in home.html
 
         {% extends 'base.html' %}
+        {% load static %}
 
         {% block content %} 
         
@@ -101,4 +102,17 @@ from .import views
         
         {% endblock %}
 
+3. single_course.html - 
+
+   -- to show single_course page set url in 'urls.py' and functions in 'views.py'
+
+   -- extend base files in 'single_course.html'
+
+        {% extends 'base.html' %}
+        {% load static %}
+
+        {% block content %} 
+        
+        
+        {% endblock %}
 
