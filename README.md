@@ -52,7 +52,7 @@ STATICFILES_DIRS = [
     <head>
         {% load static %}
 
-and link with static like below: 
+    and link with static like below: 
 
         <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/fontawesome.css' %}">
 
@@ -82,8 +82,10 @@ and import in 'urls.py' for calling 'base' url
 
 from .import views 
 
-2. home.html - /n
+2. home.html - 
+
    -- to show home page set url in 'urls.py' and functions in 'views.py'
+
    -- extend base files in home.html
 
         {% extends 'base.html' %}
