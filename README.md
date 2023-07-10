@@ -49,40 +49,40 @@ STATICFILES_DIRS = [
 * templates - html files in different folders:
 1. base.html - to load static and connect with header, footer and others - 
 
-<head>
-    {% load static %}
+    <head>
+        {% load static %}
 
 and link with static like below: 
 
-    <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/fontawesome.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/fontawesome.css' %}">
 
-    <img src="{% static 'assets/img/brand-dark.svg' %}" class="navbar-brand-img" alt="...">
+        <img src="{% static 'assets/img/brand-dark.svg' %}" class="navbar-brand-img" alt="...">
 
     </head>
     <body>
 
-    {% include 'components/header.html' %}
+        {% include 'components/header.html' %}
 
     </body>
 
 in settings.py
 
-TEMPLATES = [
-    {
-       .......
+    TEMPLATES = [
+        {
+        .......
 
-        'DIRS': ['templates'],
+            'DIRS': ['templates'],
 
-       .....
-    },
-]
+        .....
+        },
+    ]
 
 # create 'views.py' file in educamy
 and import in 'urls.py' for calling 'base' url
 
 from .import views 
 
-2. home.html - 
+2. home.html - /n
    -- to show home page set url in 'urls.py' and functions in 'views.py'
    -- extend base files in home.html
 
