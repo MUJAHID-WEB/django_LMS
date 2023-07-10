@@ -33,25 +33,37 @@ Password: 12345678
 pip3 freeze > requirements.txt
 
 # Add 'static' & 'templates' folder
-* static - css, js, images etc
+* static - css, js, images etc - put assets folder of templates
+
 
 in settings.py
 
 STATIC_URL = '/static/'
+
 STATIC_ROOT= '/static/'
 
 STATICFILES_DIR = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-* templates - html files
+* templates - html files in different folders:
+1. base.html - header & footer
+
 
 in settings.py
+
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+       .......
+
         'DIRS': ['templates'],
+
        .....
     },
 ]
+
+# create 'views.py' file in educamy
+and import in 'urls.py' for calling 'base' url
+
+from .import views 
 
