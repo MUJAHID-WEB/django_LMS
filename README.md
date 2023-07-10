@@ -42,12 +42,22 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT= '/static/'
 
-STATICFILES_DIR = [
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
 * templates - html files in different folders:
-1. base.html - header & footer
+1. base.html - to load header & footer - 
+
+<head>
+    {% load static %}
+
+and link with static like below: 
+
+<link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/fontawesome.css' %}">
+
+<img src="{% static 'assets/img/brand-dark.svg' %}" class="navbar-brand-img" alt="...">
+
 
 
 in settings.py
