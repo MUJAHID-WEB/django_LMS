@@ -54,16 +54,16 @@ STATICFILES_DIRS = [
 
 and link with static like below: 
 
-<link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/fontawesome.css' %}">
 
-<img src="{% static 'assets/img/brand-dark.svg' %}" class="navbar-brand-img" alt="...">
+    <img src="{% static 'assets/img/brand-dark.svg' %}" class="navbar-brand-img" alt="...">
 
-</head>
-<body>
+    </head>
+    <body>
 
     {% include 'components/header.html' %}
 
-</body>
+    </body>
 
 in settings.py
 
@@ -85,7 +85,7 @@ from .import views
 2. home.html - 
    -- to show home page set url in 'urls.py' and functions in 'views.py'
    -- extend base files in home.html
-   
+
         {% extends 'base.html' %}
 
         {% block content %} 
