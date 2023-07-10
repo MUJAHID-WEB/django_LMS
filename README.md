@@ -49,8 +49,8 @@ STATICFILES_DIRS = [
 * templates - html files in different folders:
 1. base.html - to load static and connect with header, footer and others - 
 
-    <head>
-        {% load static %}
+        <head>
+            {% load static %}
 
     and link with static like below: 
 
@@ -58,12 +58,12 @@ STATICFILES_DIRS = [
 
         <img src="{% static 'assets/img/brand-dark.svg' %}" class="navbar-brand-img" alt="...">
 
-    </head>
-    <body>
+        </head>
+        <body>
 
-        {% include 'components/header.html' %}
+            {% include 'components/header.html' %}
 
-    </body>
+        </body>
 
 in settings.py
 
