@@ -93,7 +93,8 @@ from .import views
 
         {% block content %} 
         
-        
+        --paste the design --
+
         {% endblock %}
 
     -- And in base file between header and footer
@@ -102,17 +103,20 @@ from .import views
         
         {% endblock %}
 
-3. single_course.html - 
+3. course_list.html - 
 
-   -- to show single_course page set url in 'urls.py' and functions in 'views.py'
+   -- to show course_list page set url in 'urls.py' and functions in 'views.py'
 
-   -- extend base files in 'single_course.html'
+   -- extend base files in 'course_list.html'
 
         {% extends 'base.html' %}
         {% load static %}
 
         {% block content %} 
-        
+
+        --paste the design --
         
         {% endblock %}
+        
+4. single_course.html
 
