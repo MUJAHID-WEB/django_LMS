@@ -13,21 +13,21 @@ python3 manage.py startapp app
 
 and add in educamy/settings.py
 
-INSTALLED_APPS = [
-  .......
-    'app',
-]
+    INSTALLED_APPS = [
+    .......
+        'app',
+    ]
 
 python3 manage.py migrate
 
 python3 manage.py runserver
 
 # Now, Create superuser
-python3 manage.py createsuperuser
+    python3 manage.py createsuperuser
 
-Username (leave blank to use 'mujahid'): mujahid
-Email address: mujahid30390@gmail.com
-Password: 12345678
+    Username (leave blank to use 'mujahid'): mujahid
+    Email address: mujahid30390@gmail.com
+    Password: 12345678
 
 # To save all pip in a file
 pip3 freeze > requirements.txt
@@ -38,13 +38,13 @@ pip3 freeze > requirements.txt
 
 in settings.py
 
-STATIC_URL = '/static/'
+    STATIC_URL = '/static/'
 
-STATIC_ROOT= '/static/'
+    STATIC_ROOT= '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static')
+    ]
 
 * templates - html files in different folders:
 1. base.html - to load static and connect with header, footer and others - 
@@ -124,10 +124,11 @@ from .import views
 
 7. registration - set authentic url in 'urls.py' 
 
-    from django.urls import path, include
-    urlpatterns = [
-        path('accounts/', include(('django.contrib.auth.urls'))),
-    ]
+        from django.urls import path, include
+        
+        urlpatterns = [
+            path('accounts/', include(('django.contrib.auth.urls'))),
+        ]
 
     This function gives the created url ' ../accounts/login'
 
