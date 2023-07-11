@@ -88,7 +88,7 @@
                   <!-- Signin -->
                   <div class="collapse show" id="collapseSignin" data-bs-parent="#accountModal">
                       <div class="modal-header">
-                          <h5 class="modal-title">Log In to Your Skola Account!</h5>
+                          <h5 class="modal-title">Log In to Your Account!</h5>
                           <button type="button" class="close text-primary" data-bs-dismiss="modal" aria-label="Close">
                               <!-- Icon -->
                               <svg width="16" height="17" viewBox="0 0 16 17" xmlns="http://www.w3.org/2000/svg">
@@ -161,38 +161,43 @@
   
                       <div class="modal-body">
                           <!-- Form Signup -->
-                          <form class="mb-5">
-  
-                              <!-- Username -->
-                              <div class="form-group mb-5">
-                                  <label for="modalSignupUsername">
-                                      Username
-                                  </label>
-                                  <input type="text" class="form-control" id="modalSignupUsername" placeholder="John">
-                              </div>
-  
-                              <!-- Email -->
-                              <div class="form-group mb-5">
-                                  <label for="modalSignupEmail">
-                                      Username or Email
-                                  </label>
-                                  <input type="email" class="form-control" id="modalSignupEmail" placeholder="johndoe@creativelayers.com">
-                              </div>
-  
-                              <!-- Password -->
-                              <div class="form-group mb-5">
-                                  <label for="modalSignupPassword">
-                                      Password
-                                  </label>
-                                  <input type="password" class="form-control" id="modalSignupPassword" placeholder="**********">
-                              </div>
-  
-                              <!-- Submit -->
-                              <button class="btn btn-block btn-primary" type="submit">
-                                  SIGN UP
-                              </button>
-  
-                          </form>
+                       
+                        {% include 'components/msg.html'  %}
+                            <!-- Form Register -->
+                            <form class="mb-5" method="post" action="{% url 'register' %}">
+                                {% csrf_token %}
+
+                                <!-- Username -->
+                                <div class="form-group mb-5">
+                                    <label for="modalSignupUsername1">
+                                        Username
+                                    </label>
+                                    <input type="text" class="form-control" id="modalSignupUsername1" placeholder="John" name='username'>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="form-group mb-5">
+                                    <label for="modalSignupEmail1">
+                                        Email
+                                    </label>
+                                    <input type="email" class="form-control" id="modalSignupEmail1" placeholder="johndoe@gmail.com" name='email'>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="form-group mb-5">
+                                    <label for="modalSignupPassword3">
+                                        Password
+                                    </label>
+                                    <input type="password" class="form-control" id="modalSignupPassword3" placeholder="**********" name='password'>
+                                </div>
+
+                                <!-- Submit -->
+                                <button class="btn btn-block btn-primary" type="submit">
+                                    SIGN UP
+                                </button>
+
+                            </form>
+
   
                           <!-- Text -->
                           <p class="mb-0 font-size-sm text-center">

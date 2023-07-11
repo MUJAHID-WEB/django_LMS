@@ -34,23 +34,25 @@
                 <!-- Register -->
                 <h3 class="mb-6">Sign Up and Start Learning!</h3>
 
+               {% include 'components/msg.html'  %}
                 <!-- Form Register -->
-                <form class="mb-5">
+                <form class="mb-5" method="post" action="{% url 'register' %}">
+                    {% csrf_token %}
 
                     <!-- Username -->
                     <div class="form-group mb-5">
                         <label for="modalSignupUsername1">
                             Username
                         </label>
-                        <input type="text" class="form-control" id="modalSignupUsername1" placeholder="John">
+                        <input type="text" class="form-control" id="modalSignupUsername1" placeholder="John" name='username'>
                     </div>
 
                     <!-- Email -->
                     <div class="form-group mb-5">
                         <label for="modalSignupEmail1">
-                            Username or Email
+                            Email
                         </label>
-                        <input type="email" class="form-control" id="modalSignupEmail1" placeholder="johndoe@creativelayers.com">
+                        <input type="email" class="form-control" id="modalSignupEmail1" placeholder="johndoe@gmail.com" name='email'>
                     </div>
 
                     <!-- Password -->
@@ -58,7 +60,7 @@
                         <label for="modalSignupPassword3">
                             Password
                         </label>
-                        <input type="password" class="form-control" id="modalSignupPassword3" placeholder="**********">
+                        <input type="password" class="form-control" id="modalSignupPassword3" placeholder="**********" name='password'>
                     </div>
 
                     <!-- Submit -->

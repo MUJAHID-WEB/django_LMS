@@ -132,17 +132,66 @@ from .import views
 
     This function gives the created url ' ../accounts/login'
 
+    # But for Auth, need to: 
+        create 'user_auth.py' file in 'educamy'
+
+        and user auth
+
+            from django.contrib.auth.models import User
+            from django.contrib import messages
+
+            -- write authentication functions here --
+
+
+        and import in 'urls.py' for calling 'base' url
+
+            from .import views, user_auth
+            urlpatterns = [
+                path('accounts/register', user_auth.REGISTER, name='register'),
+                path('dologin', user_auth.DO_LOGIN, name='dologin'),
+            ]
+
     1. login.html
 
-    # But for register, need to: 
-    create 'user_auth.py' file in 'educamy'
+            <form class="mb-5" method='post' action='{% url 'dologin' %}'>
+            {% csrf_token %}
 
-    and import in 'urls.py' for calling 'base' url
+            --give name in input field - name='email' --
 
-        from .import views, user_auth
-        urlpatterns = [
-        path('accounts/register', user_auth.REGISTER, name='register'),
-        ]
+            -- button type should be type="submit"
+        
+            </form>
 
-    2. register.html
+    2. register.html 
+
+                {% include 'components/msg.html'  %} # msg.html contains error, success and warning alert framework
+
+                <form class="mb-5" method='post' action='{% url 'register' %}'>
+                    {% csrf_token %}
+
+                    --give name in input field - name='username' --
+
+                    -- button type should be type="submit"
+                
+                </form>
+
+    # To change Backend Login 'username' field to 'email' field:
+    1. Create 'email_backend' file in 'app' folder
+    2. import following to write functions 
+
+            from django.contrib.auth import get_user_model
+            from django.contrib.auth.backends import ModelBackend
+
+            class EmailBackEnd(ModelBackend):
+            def authenticate(self,  username=None, password=None, **kwargs):
+            -- write functions --
+
+    3. import following in 'user_auth.py' to write functions 
+
+            from django.contrib.auth import authenticate,login,logout
+            from app.email_backend import EmailBackEnd
+
+            def DO_LOGIN(request):
+
+            -- write functions --
 
