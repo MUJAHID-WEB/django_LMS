@@ -195,3 +195,52 @@ from .import views
 
             -- write functions --
 
+    # Forget Password setup
+    // smtp server settings in "settings.py"
+        -------------------------------
+        LOGIN_REDIRECT_URL = 'home'
+        LOGOUT_REDIRECT_URL = 'login'
+
+
+        EMAIL_USE_TLS = True
+        EMAIL_HOST = 'smtp.gmail.com'
+        EMAIL_PORT = 587
+        EMAIL_HOST_USER = 'Enter Email ID'
+        EMAIL_HOST_PASSWORD = 'Enter Password'
+
+
+
+        ---------------------------------------------
+        Set url link in 'login.html'
+
+            <a class="text-gray-800" href="{%url 'password_reset'%}">Forgot Password</a>
+
+
+
+        // Create Html Templates
+        -----------------------------------
+        -templates
+        -- registration
+        ---- password_reset_form.html
+        ---- password_reset_done.html
+        ---- password_reset_confirm.html
+        ---- password_reset_complete.html
+
+
+
+        // install django-crispy-forms
+        -------------
+
+        pip install django-crispy-forms
+
+        // settings
+        -------------
+        INSTALLED_APPS = [
+            ......
+            'crispy_forms',
+        ]
+
+        CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+
