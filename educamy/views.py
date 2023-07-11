@@ -11,3 +11,10 @@ def COURSE_LIST(request):
 
 def SINGLE_COURSE(request):
     return render(request, 'main/single_course.html')
+
+def ABOUT_US(request):
+    return render(request, 'main/about_us.html')
+
+def CONTACT_US(request):
+    return render(request, 'main/contact_us.html')
+

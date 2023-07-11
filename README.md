@@ -82,7 +82,7 @@ and import in 'urls.py' for calling 'base' url
 
 from .import views 
 
-2. home.html - 
+2. main/home.html - 
 
    -- to show home page set url in 'urls.py' and functions in 'views.py'
 
@@ -103,7 +103,7 @@ from .import views
         
         {% endblock %}
 
-3. course_list.html - 
+3. main/course_list.html - 
 
    -- to show course_list page set url in 'urls.py' and functions in 'views.py'
 
@@ -118,5 +118,30 @@ from .import views
         
         {% endblock %}
         
-4. single_course.html
+4. main/single_course.html
+5. main/contact_us.html
+6. main/about_us.html
+
+7. registration - set authentic url in 'urls.py' 
+
+    from django.urls import path, include
+    urlpatterns = [
+        path('accounts/', include(('django.contrib.auth.urls'))),
+    ]
+
+    This function gives the created url ' ../accounts/login'
+
+    1. login.html
+
+    # But for register, need to: 
+    create 'user_auth.py' file in 'educamy'
+
+    and import in 'urls.py' for calling 'base' url
+
+        from .import views, user_auth
+        urlpatterns = [
+        path('accounts/register', user_auth.REGISTER, name='register'),
+        ]
+
+    2. register.html
 
