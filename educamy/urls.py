@@ -17,4 +17,8 @@ urlpatterns = [
     path('accounts/', include(('django.contrib.auth.urls'))),
     path('accounts/register', user_auth.REGISTER, name='register'),
     path('dologin', user_auth.DO_LOGIN, name='dologin'),
+    path('accounts/profile', user_auth.PROFILE, name='profile'),
+    path('accounts/profile/update', user_auth.PROFILE_UPDATE, name='profile_update'),
+
+
 ]

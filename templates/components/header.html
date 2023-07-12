@@ -826,26 +826,26 @@
                 </ul> {% endcomment %}
                 <ul class="navbar-nav ms-5">
                     <li class="nav-item dropdown dropdown-full-width ">
-                        <a class="nav-link px-xl-4"  href="">
+                        <a class="nav-link px-xl-4"  href="{% url 'home' %}">
                             <span>Home</span>
                         </a>
 
                     </li>
                     <li class="nav-item dropdown dropdown-full-width">
-                        <a class="nav-link px-xl-4"  href="">
+                        <a class="nav-link px-xl-4"  href="{% url 'about_us' %}">
                             About
                         </a>
 
                     </li>
                     <li class="nav-item dropdown dropdown-full-width">
-                        <a class="nav-link px-xl-4"  href="">
+                        <a class="nav-link px-xl-4"  href="{% url 'contact_us' %}">
                             Contact Us
                         </a>
 
                     </li>
                     <li class="nav-item dropdown dropdown-full-width">
                         
-                        <a class="nav-link px-xl-4" href="#">
+                        <a class="nav-link px-xl-4" href="{% url 'course_list' %}">
                             My Courses
                         </a>
 
@@ -923,7 +923,7 @@
 
                         <ul class="dropdown-menu border-xl shadow-none" aria-labelledby="user">
                             <li class="dropdown-item">
-                                <a class="dropdown-link active" href="">
+                                <a class="dropdown-link active" href="{% url 'profile' %}">
                                     Account
                                 </a>
                             </li>
@@ -947,7 +947,7 @@
 
                         <ul class="dropdown-menu border-xl shadow-none" aria-labelledby="user">
                             <li class="dropdown-item">
-                                <a class="dropdown-link " href="">
+                                <a class="dropdown-link " href="{% url 'profile' %}">
                                     Account
                                 </a>
                             </li>

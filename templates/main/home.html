@@ -2,34 +2,6 @@
 {% load static %}
 {% block content %} 
 
-    <!-- HERO
-    ================================================== -->
-    <section class="pb-11 pt-13 pt-xl-14 mt-n12 position-relative">
-        <div class="position-absolute top-0 right-0">
-            <img src="{% static 'assets/img/illustrations/illustration-7.svg' %}" class="img-fluid" alt="...">
-        </div>
-        <div class="container container-wd">
-            <div class="row align-items-center">
-                <div class="col-12 col-md-5 col-lg-6 order-md-2" data-aos="fade-in">
-
-                    <!-- Image -->
-                    <img src="{% static 'assets/img/illustrations/illustration-5.png' %}" class="img-fluid mb-6 mb-md-0" alt="...">
-
-                </div>
-                <div class="col-12 col-md-7 col-lg-6 order-md-1">
-                    <!-- Heading -->
-                    <h1 class="display-2" data-aos="fade-left" data-aos-duration="150">Find The Best <span class="fw-bold">Courses</span></h1>
-
-                    <!-- Text -->
-                    <p class="text-capitalize me-xl-11 me-wd-14 pe-wd-4" data-aos="fade-up" data-aos-duration="200">Technology is bringing a massive wave of evolution on learning things in different ways.</p>
-
-                    <!-- Buttons -->
-                    <a href="course-list-v4.html" class="btn btn-pill btn-helio btn-gradient-1 text-white btn-x-wide shadow lift mb-5 mt-1" data-aos="fade-up" data-aos-duration="200">VIEW COURSES</a>
-                </div>
-            </div> <!-- / .row -->
-        </div> <!-- / .container -->
-    </section>
-
     <!-- FEATURED PRODUCT
     ================================================== -->
     <section class="pt-5 pb-9 py-md-11 bg-white">
@@ -45,18 +17,13 @@
                         <a class="btn-sm btn-pill me-1 mb-1 text-dark fw-medium px-6 active" id="pills-all-tab" data-bs-toggle="tab" href="#pills-all" role="tab" aria-controls="pills-all" aria-selected="true">
                             All Categories
                         </a>
+
+                        {% for i in category %}
                         <a class="btn-sm btn-pill me-1 mb-1 text-dark fw-medium px-6" id="pills-art-tab" data-bs-toggle="tab" href="#pills-art" role="tab" aria-controls="pills-art" aria-selected="false">
-                            Art
+                            {{i.name}}
                         </a>
-                        <a class="btn-sm btn-pill me-1 mb-1 text-dark fw-medium px-6" id="pills-exercise-tab" data-bs-toggle="tab" href="#pills-exercise" role="tab" aria-controls="pills-exercise" aria-selected="false">
-                            Exercise
-                        </a>
-                        <a class="btn-sm btn-pill me-1 mb-1 text-dark fw-medium px-6" id="pills-music-tab" data-bs-toggle="tab" href="#pills-music" role="tab" aria-controls="pills-music" aria-selected="false">
-                            Music
-                        </a>
-                        <a class="btn-sm btn-pill me-1 mb-1 text-dark fw-medium px-6" id="pills-software-dev-tab" data-bs-toggle="tab" href="#pills-software-dev" role="tab" aria-controls="pills-software-dev" aria-selected="false">
-                            Software Development
-                        </a>
+                       {% endfor %}
+                       
                     </div>
                 </div>
             </div>

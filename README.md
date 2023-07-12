@@ -198,6 +198,7 @@ from .import views
     # Forget Password setup
     // smtp server settings in "settings.py"
         -------------------------------
+        
         LOGIN_REDIRECT_URL = 'home'
         LOGOUT_REDIRECT_URL = 'login'
 
@@ -242,5 +243,65 @@ from .import views
 
         CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+# Profile update page setup:
+1. Template in 'registration/profile.html'
 
+        -To show existing value by using 'value='{{user.first_name}}'' in input field
 
+2. Url path in 'urls.py' 
+
+            path('accounts/profile', user_auth.PROFILE, name='profile'),
+            path('accounts/profile/update', user_auth.PROFILE_UPDATE, name='profile_update'),
+
+3. functions in 'educamy/user_auth.py'
+
+            def PROFILE(request):
+                return render (request, 'registration/profile.html')
+
+            def PROFILE_UPDATE(request):
+             -- write functions --
+
+4. Link in Account - {% url 'profile' %}
+
+# Featured Courses setup:
+1. functions in 'app/models.py'
+
+            class Categories(models.Model):
+             -- write functions --
+
+2. Register in 'app/admin.py'
+
+        from .models import *
+
+        admin.site.register(Categories)
+
+3. Data fetch in 'educamy/views.py' by importing
+
+        from app.models import Categories
+
+        def HOME(request):
+    
+            category = Categories.objects.all
+            -- and link to 'home.html'
+
+4. cmd in terminal 
+
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver
+
+5. for icon: set link in 'base.html'
+
+        <script src="https://kit.fontawesome.com/0c48ba20ec.js" crossorigin="anonymous"></script>
+
+6. To show in Home page Featured Category Section
+
+        {% for i in category %}  # category variable from 'views.py'
+
+        <a class="btn-sm btn-pill me-1 mb-1 text-dark fw-medium px-6" id="pills-art-tab" data-bs-toggle="tab" href="#pills-art" role="tab" aria-controls="pills-art" aria-selected="false">
+            
+            {{i.name}} # Categories name given in 'model.py'
+
+        </a>
+
+        {% endfor %}
