@@ -3,6 +3,9 @@ from django.contrib import admin
 from django.urls import path, include
 from .import views, user_auth
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -21,4 +24,4 @@ urlpatterns = [
     path('accounts/profile/update', user_auth.PROFILE_UPDATE, name='profile_update'),
 
 
-]
+]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

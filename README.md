@@ -263,7 +263,7 @@ from .import views
 
 4. Link in Account - {% url 'profile' %}
 
-# Featured Courses setup:
+# Featured Courses Categories setup:
 1. functions in 'app/models.py'
 
             class Categories(models.Model):
@@ -281,7 +281,7 @@ from .import views
 
         def HOME(request):
     
-            category = Categories.objects.all
+            category = Categories.objects.all().order_by('id')[0:5]
             -- and link to 'home.html'
 
 4. cmd in terminal 
@@ -296,12 +296,50 @@ from .import views
 
 6. To show in Home page Featured Category Section
 
-        {% for i in category %}  # category variable from 'views.py'
+        {% for i in category %}       # category variable from 'views.py'
 
-        <a class="btn-sm btn-pill me-1 mb-1 text-dark fw-medium px-6" id="pills-art-tab" data-bs-toggle="tab" href="#pills-art" role="tab" aria-controls="pills-art" aria-selected="false">
+        <a class="btn-sm btn-pill me-1 mb-1 text-dark fw-medium px-6" 
+            id="pills-art-tab" 
+            data-bs-toggle="tab" 
+
+            href="#pills-{{i.id}}" 
+
+            role="tab" 
+            aria-controls="pills-art" 
+            aria-selected="false">
             
-            {{i.name}} # Categories name given in 'model.py'
+            {{i.name}}     # Categories name given in 'model.py'
 
         </a>
 
         {% endfor %}
+
+# Courses setup:
+1. functions in 'app/models.py' - Author, Courses
+2. cmd in terminal 
+
+        pip install pillow
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver
+
+3. Register in 'app/admin.py'
+4. Data fetch in 'educamy/views.py' by importing
+
+        from app.models import Categories
+
+        def HOME(request):
+    
+            course = Course.objects.filter(status = 'PUBLISH').order_by('-id')
+            -- and link to 'home.html'
+
+6. Show in Home page Featured Category Section
+7. SHow media file - importing in 'urls.py'
+
+        from django.conf import settings
+        from django.conf.urls.static import static
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+
+        ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
