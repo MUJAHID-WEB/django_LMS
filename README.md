@@ -343,3 +343,154 @@ from .import views
             path('admin/', admin.site.urls),
 
         ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+8. To show discount price 
+
+- functions in app/templatetags/course_tags.py
+
+        from django import template
+        import math
+        register = template.Library()
+
+
+        @register.simple_tag
+        def discount_calculation(price, discount):
+            if discount is None or discount is 0:
+                return price
+            sellprice = price
+            sellprice = price - (price * discount/100)
+
+            return math.floor(sellprice)
+
+- fetch data in 'home.html'
+
+        {% load course_tags %}
+
+        <div class="col-auto px-2 text-right">
+            <del class="font-size-sm">
+                ${{i.price}}
+            </del>
+            <ins class="h4 mb-0 d-block mb-lg-n1">
+                $ {%  discount_calculation i.price i.discount %}
+            </ins>
+        </div>
+
+
+# Course List filter
+1. Functions in models.py for category
+
+        class Categories(models.Model):
+        
+        def get_all_category(self):
+            return Categories.objects.all().order_by('id')
+
+2. Functions in models.py for Level
+
+        class Level(models.Model):
+            name = models.CharField(max_length=100)
+
+
+3. Register in admin.py for Level
+
+        admin.site.register(Level)
+
+4. cmd in terminal 
+
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver
+
+
+5. Functions in views.py for category, level and course get in course list
+
+        def COURSE_LIST(request):
+            category = Categories.get_all_category(Categories)
+            level = Level.objects.all()
+            course = Course.objects.all()
+            context = {
+                'category' : category,
+                'level' : level,
+                'course' : course,
+            }
+            return render(request, 'main/course_list.html', context)
+
+6. fetch data in 'course_list.html'
+
+# Course List filter wise course show
+1. ajax cdn link in base.html
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+2. urls.py
+
+        path('product/filter-data',views.filter_data,name="filter-data"),
+
+3. Functions in views.py
+
+        from django.template.loader import render_to_string
+        from django.http import JsonResponse
+
+        def filter_data(request):
+            -- Functions --
+
+4. fetch data in 'course_list.html'
+
+        <script>
+            $(document).ready(function(){
+            
+                $(".filter-checkbox").on('click', function(){
+                    var filter_object={};
+                    $(".filter-checkbox").each(function(index,ele){
+                        var filter_value=$(this).val();
+                        var filter_key=$(this).data('filter');
+                        console.log(filter_key,filter_value);
+                        filter_object[filter_key]=Array.from(document.querySelectorAll('input[data-filter='+filter_key+']:checked')).map(function(el){
+                            return el.value;
+                        });
+                    });
+            
+                    $.ajax({
+                        url:'{% url 'filter-data' %}',
+                        data:filter_object,
+                        dataType:'json',
+                        success:function(res){
+                            console.log(res)
+                            $("#filteredCourses").html(res.data);
+                            var filter_value=$(this).val();
+                            var filter_key=$(this).data('filter');
+                        }
+                    });
+                });
+            });
+        </script>
+
+5. File in Templates/ajax/course.html - to show ajax result
+
+# Search Option:
+
+1. header.html - set search form
+
+        <form class="w-100" method="get" action="{% url 'search'%}">
+            <div class="input-group border rounded">
+                <div class="input-group-prepend">
+                    <button class="btn btn-sm text-secondary icon-xs d-flex align-items-center" type="submit">
+                        <!-- Icon -->
+                        
+                    </button>
+                </div>
+                <input class="form-control form-control-sm border-0 ps-0" type="search" placeholder="What do you want to learn ?" aria-label="Search" name="query">
+            </div>
+        </form>
+
+
+2. urls.py
+
+        path('search', views.SEARCH, name="search"),
+
+3. views.py 
+
+        def SEARCH(request):
+            -- functions -
+            return render(request, 'search/search.html')
+
+4. To show search result - templates/search/search.html

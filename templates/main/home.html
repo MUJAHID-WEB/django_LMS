@@ -1,8 +1,38 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %} 
+{% load course_tags %}
 
-    <!-- FEATURED PRODUCT
+
+    <!-- HERO
+    ================================================== -->
+    <section class="pb-11 pt-13 pt-xl-14 mt-n12 position-relative">
+        <div class="position-absolute top-0 right-0">
+            <img src="{% static 'assets/img/illustrations/illustration-7.svg' %}" class="img-fluid" alt="...">
+        </div>
+        <div class="container container-wd">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-5 col-lg-6 order-md-2" data-aos="fade-in">
+
+                    <!-- Image -->
+                    <img src="{% static 'assets/img/illustrations/illustration-5.png' %}" class="img-fluid mb-6 mb-md-0" alt="...">
+
+                </div>
+                <div class="col-12 col-md-7 col-lg-6 order-md-1">
+                    <!-- Heading -->
+                    <h1 class="display-2" data-aos="fade-left" data-aos-duration="150">Find The Best <span class="fw-bold">Courses</span></h1>
+
+                    <!-- Text -->
+                    <p class="text-capitalize me-xl-11 me-wd-14 pe-wd-4" data-aos="fade-up" data-aos-duration="200">Technology is bringing a massive wave of evolution on learning things in different ways.</p>
+
+                    <!-- Buttons -->
+                    <a href="{% url 'course_list'%}" class="btn btn-pill btn-helio btn-gradient-1 text-white btn-x-wide shadow lift mb-5 mt-1" data-aos="fade-up" data-aos-duration="200">VIEW COURSES</a>
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+    </section>
+
+    <!-- FEATURED COURSES
     ================================================== -->
     <section class="pt-5 pb-9 py-md-11 bg-white">
         <div class="container container-wd">
@@ -65,7 +95,7 @@
                                     </a>
 
                                     <span class="badge sk-fade-bottom badge-lg badge-orange badge-pill badge-float bottom-0 left-0 mb-4 ms-4 fw-bold">
-                                        <span class="text-white text-uppercase fw-bold font-size-xs">Discount {{i.discount}}</span>
+                                        <span class="text-white text-uppercase fw-bold font-size-xs">Discount {{i.discount}}%</span>
                                     </span>
                                 </div>
 
@@ -125,11 +155,21 @@
                                                     </li>
                                                 </ul>
                                             </div>
-
+                                            <!-- Price -->
+                                            {% if i.price == 0 %}
                                             <div class="col-auto px-2 text-right">
-                                                <del class="font-size-sm">$500</del>
-                                                <ins class="h4 mb-0 d-block mb-lg-n1">${{i.price}}</ins>
+                                                
+                                                <ins class="h4 mb-0 mb-lg-n1 ms-1">
+                                                    <a class="badge badge-primary">Free</a>
+                                                </ins>
                                             </div>
+                                            {% else %}
+                                            <div class="col-auto px-2 text-right">
+                                                <del class="font-size-sm">${{i.price}}</del>
+                                                <ins class="h4 mb-0 mb-lg-n1 ms-1">${% discount_calculation i.price i.discount %}</ins>
+                                            </div>
+                                            {% endif %}
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -238,11 +278,20 @@
                                                     </li>
                                                 </ul>
                                             </div>
-
+                                            <!-- Price -->
+                                            {% if i.price == 0 %}
                                             <div class="col-auto px-2 text-right">
-                                                <del class="font-size-sm">$500</del>
-                                                <ins class="h4 mb-0 d-block mb-lg-n1">${{i.price}}</ins>
+                                                
+                                                <ins class="h4 mb-0 mb-lg-n1 ms-1">
+                                                    <a class="badge badge-primary">Free</a>
+                                                </ins>
                                             </div>
+                                            {% else %}
+                                            <div class="col-auto px-2 text-right">
+                                                <del class="font-size-sm">${{i.price}}</del>
+                                                <ins class="h4 mb-0 mb-lg-n1 ms-1">${% discount_calculation i.price i.discount %}</ins>
+                                            </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
