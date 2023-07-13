@@ -494,3 +494,49 @@ from .import views
             return render(request, 'search/search.html')
 
 4. To show search result - templates/search/search.html
+
+# Create Course Slug Automatically Using Title for Course Details page
+1. models.py
+
+        from django.utils.text import slugify
+        from django.db.models.signals import pre_save
+
+        class Course(models.Model):
+            - functions -
+
+            def get_absolute_url(self):
+                from django.urls import reverse
+                return reverse("course_details", kwargs={'slug': self.slug})
+
+
+        def create_slug(instance, new_slug=None):
+            - Functions -
+
+2. urls.py
+
+        path('course/<slug:slug>', views.COURSE_DETAILS, name="course_details"),
+
+3. views.py
+
+        def COURSE_DETAILS(request, slug):
+            course = Course.objects.filter(slug = slug)
+            if course.exists():
+                course = course.first()
+            else:
+                return redirect('404')
+            
+            context = {
+                'course': course
+            }
+
+            return render(request, 'course/course_details.html', context)
+
+        def PAGE_NOT_FOUND(request):
+            return render(request, 'error/404.html')
+
+4. link in home.html to redirect to course details
+
+        <a href="{{i.get_absolute_url}}"> </a>
+
+5. if course not found redirect to 404 page
+

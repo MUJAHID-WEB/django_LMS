@@ -74,22 +74,55 @@ def filter_data(request):
 def SEARCH(request):
     query = request.GET['query']
     course = Course.objects.filter(title__icontains = query)
+    category = Categories.get_all_category(Categories)
+    
     context = {
-        'course': course
+        'course': course,
+        'category': category
     }
     return render(request, 'search/search.html', context)
 
 # Course Details Page
-def SINGLE_COURSE(request):
-    return render(request, 'main/single_course.html')
+def COURSE_DETAILS(request, slug):
+    course = Course.objects.filter(slug = slug)
+    category = Categories.get_all_category(Categories)
+    
+    if course.exists():
+        course = course.first()
+    else:
+        return redirect('404')
+    
+    context = {
+        'course': course,
+        'category' : category,
+    }
 
+    return render(request, 'course/course_details.html', context)
+
+# 404 PAGE
+def PAGE_NOT_FOUND(request):
+    category = Categories.get_all_category(Categories)
+    context = {
+        'category' : category,
+    }
+    return render(request, 'error/404.html', context)
 
 # About Us page
 def ABOUT_US(request):
-    return render(request, 'main/about_us.html')
+    category = Categories.get_all_category(Categories)
+    context = {
+        'category' : category,
+    }
+    return render(request, 'main/about_us.html', context)
 
 
 # Contact Us page
 def CONTACT_US(request):
-    return render(request, 'main/contact_us.html')
+    category = Categories.get_all_category(Categories)
+    context = {
+        'category' : category,
+    }
+    return render(request, 'main/contact_us.html', context)
+
+
 
