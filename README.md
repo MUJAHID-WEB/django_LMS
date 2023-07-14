@@ -632,3 +632,53 @@ from .import views
         python manage.py runserver
        
 4. course_details.html - Curriculum tab
+
+# Enroll 
+1. Enroll button redirect to checkout page
+
+        <a class="btn btn-primary btn-block mb-3" href="/checkout/{{course.slug}}">
+            ENROLL
+        </a>
+
+2. urls.py
+         
+         path('checkout/<slug:slug>', views.CHECKOUT, name="checkout"),    
+
+3. views.py 
+
+        def COURSE_DETAILS(request, slug):
+            course_id = Course.objects.get(slug = slug)
+            try:
+                enroll_status = UserCourse.objects.get(user= request.user, course= course_id)
+            except UserCourse.DoesNotExist:
+                enroll_status = None
+
+            context = {
+                'enroll_status' : enroll_status,
+            }
+            return render(request, 'course/course_details.html', context)
+            
+
+        def CHECKOUT(request, slug):
+            -- functions --
+            return render(request, 'checkout/checkout.html')
+
+4. models.py
+
+        from django.contrib.auth.models import User
+         
+        class UserCourse(models.Model):
+            -- function --
+
+5. cmd in terminal 
+
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver
+
+6. Register in admin.py
+
+        admin.site.register(UserCourse)
+
+
+

@@ -84,10 +84,17 @@ def SEARCH(request):
 
 # Course Details Page
 def COURSE_DETAILS(request, slug):
-    course = Course.objects.filter(slug = slug)
+    
     time_duration = Video.objects.filter(course__slug = slug).aggregate(sum = Sum('time_duration'))
     category = Categories.get_all_category(Categories)
-    
+
+    course_id = Course.objects.get(slug = slug)
+    try:
+        enroll_status = UserCourse.objects.get(user= request.user, course= course_id)
+    except UserCourse.DoesNotExist:
+        enroll_status = None
+
+    course = Course.objects.filter(slug = slug)
     if course.exists():
         course = course.first()
     else:
@@ -97,6 +104,7 @@ def COURSE_DETAILS(request, slug):
         'course': course,
         'category' : category,
         'time_duration' : time_duration,
+        'enroll_status' : enroll_status,
     }
 
     return render(request, 'course/course_details.html', context)
@@ -125,6 +133,20 @@ def CONTACT_US(request):
         'category' : category,
     }
     return render(request, 'main/contact_us.html', context)
+
+# Checkout
+def CHECKOUT(request, slug):
+    course = Course.objects.get(slug = slug)
+
+    if course.price == 0:
+        course = UserCourse(
+            user = request.user,
+            course = course
+        )
+        course.save()
+        return redirect('home')
+
+    return render(request, 'checkout/checkout.html')
 
 
 

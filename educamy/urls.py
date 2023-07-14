@@ -29,5 +29,7 @@ urlpatterns = [
     path('accounts/profile', user_auth.PROFILE, name='profile'),
     path('accounts/profile/update', user_auth.PROFILE_UPDATE, name='profile_update'),
 
+    path('checkout/<slug:slug>', views.CHECKOUT, name="checkout"),    
+
 
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
