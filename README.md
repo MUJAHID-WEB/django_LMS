@@ -540,3 +540,95 @@ from .import views
 
 5. if course not found redirect to 404 page
 
+# What you learn and Requirements points set in Course overview
+1. models.py
+
+        # What_you_learn
+        class What_you_learn(models.Model):
+            course = models.ForeignKey(Course, on_delete=models.CASCADE)
+            points = models.CharField(max_length=500)
+
+            def __str__(self):
+                return self.points
+
+        # Requirements
+        class Requirements(models.Model):
+            course = models.ForeignKey(Course, on_delete=models.CASCADE)
+            points = models.CharField(max_length=500)
+
+            def __str__(self):
+                return self.points
+
+2. admin.py
+
+        class What_you_learn_TabulaInline(admin.TabularInline):
+            model = What_you_learn
+
+        class Requirements_TabulaInline(admin.TabularInline):
+            model = Requirements
+
+        class course_admin(admin.ModelAdmin):
+            inlines = (What_you_learn_TabulaInline, Requirements_TabulaInline)
+
+        
+        admin.site.register(Course, course_admin)
+        admin.site.register(What_you_learn)
+        admin.site.register(Requirements)
+
+3. cmd in terminal 
+
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver
+
+4. course_details.html - overview tab
+
+        <h3 class="mb-5">What you'll learn</h3>
+        <div class="row row-cols-lg-2 mb-8">
+            <div class="col-md">
+                <ul class="list-style-v1 list-unstyled">
+                    {% for learn in course.what_you_learn_set.all|slice:"0:5" %}
+                    <li>{{learn.points}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="col-md">
+                <ul class="list-style-v1 list-unstyled ms-xl-6">
+
+                    {% for learn in course.what_you_learn_set.all|slice:"5:10" %}
+                    <li>{{learn.points}}</li>
+                    {% endfor %}
+                    
+                </ul>
+            </div>
+        </div>
+
+# Lesson part with video
+1. models.py
+
+        class Lesson(models.Model):
+            -- Functions --
+            
+        class Video(models.Model):
+            -- Functions --
+
+2. Register in admin.py
+
+        class Video_TabulaInline(admin.TabularInline):
+            model = Video
+
+
+        class course_admin(admin.ModelAdmin):
+            inlines = (What_you_learn_TabulaInline, Requirements_TabulaInline, Video_TabulaInline)
+
+
+        admin.site.register(Lesson)
+
+3. cmd in terminal 
+
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver
+       
+4. course_details.html - Curriculum tab

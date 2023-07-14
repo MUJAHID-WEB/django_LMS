@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from app.models import *
 from django.template.loader import render_to_string
 from django.http import JsonResponse
-
+from django.db.models import Sum
 
 
 # Base part
@@ -85,6 +85,7 @@ def SEARCH(request):
 # Course Details Page
 def COURSE_DETAILS(request, slug):
     course = Course.objects.filter(slug = slug)
+    time_duration = Video.objects.filter(course__slug = slug).aggregate(sum = Sum('time_duration'))
     category = Categories.get_all_category(Categories)
     
     if course.exists():
@@ -95,6 +96,7 @@ def COURSE_DETAILS(request, slug):
     context = {
         'course': course,
         'category' : category,
+        'time_duration' : time_duration,
     }
 
     return render(request, 'course/course_details.html', context)

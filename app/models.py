@@ -20,6 +20,7 @@ class Categories(models.Model):
 class Author(models.Model):
     author_profile = models.ImageField(upload_to="Media/author")
     name = models.CharField(max_length=100, null=True)
+    designation = models.CharField(max_length=100, null=True)
     about_author = models.TextField()
 
     def __str__(self):
@@ -31,6 +32,13 @@ class Level(models.Model):
 
     def __str__(self):
         return self.name
+    
+# Language Model    
+class Language(models.Model):
+    language = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.language
 
 # Course Model
 class Course(models.Model):
@@ -47,6 +55,7 @@ class Course(models.Model):
     author = models.ForeignKey(Author,on_delete=models.CASCADE,null=True)
     category = models.ForeignKey(Categories,on_delete=models.CASCADE)
     level = models.ForeignKey(Level,on_delete=models.CASCADE,null=True)
+    language = models.ForeignKey(Language,on_delete=models.CASCADE,null=True)
     
     description = models.TextField()
     price = models.IntegerField(null=True,default=0)
@@ -98,3 +107,24 @@ class Requirements(models.Model):
 
     def __str__(self):
         return self.points
+    
+#lesson
+class Lesson(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name + ' - ' + self.course.title
+    
+class Video(models.Model):
+    serial_number = models.IntegerField(null= True)
+    thumbnail = models.ImageField(upload_to="Media/Yt_Thumbnail", null=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    youtube_id = models.CharField(max_length=200)
+    time_durstion = models.IntegerField(null=True)
+    preview = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
