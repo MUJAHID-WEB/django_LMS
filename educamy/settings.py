@@ -136,4 +136,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mujahid30390@gmail.com'
 EMAIL_HOST_PASSWORD = 'password'
 
-
+# for Razorpay
+KEY_ID = 'rzp_test_0sWnG3OmSRb0pq'
+KEY_SECRECT = 'qBbH88G6MGJ2lQESxmj3Mmzc'

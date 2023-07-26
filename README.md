@@ -681,4 +681,159 @@ from .import views
         admin.site.register(UserCourse)
 
 
+# My Course page
+1. create file in 'course/my_course.html
 
+        {% include 'components/msg.html' %}
+        -----
+        {% for i in course %}
+            -functions code to fetch data
+            {{i.course.featured_image}}
+        {% endfor %}
+
+2. urls.py 
+
+        path('my_course', views.MY_COURSE, name="my_course"), 
+
+3. views.py
+
+        def MY_COURSE (request):
+            course = UserCourse.objects.filter(user = request.user) # Those courses are purchased by LogIn user
+
+            context = {
+                'course': course,
+            }
+            return render(request, 'course/my_course.html', context)
+
+4. Success msg - in views.py
+
+    from django.contrib import messages
+    
+    def CHECKOUT(request, slug):
+           -------
+           messages.success(request, 'You are enrolled in new course.')
+           return redirect('my_course')
+
+
+# Checkout Payment
+1. in checkout/checkout.html
+
+        <form name="checkout" method="post" action="?action=create_payment" class="checkout woocommerce-checkout">
+            {% csrf_token %}
+
+            <input type="text" class="input-text " name="first_name" value="{{user.first_name}}">
+
+        </form>
+
+            {% if order is not None %}
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            <script>
+                var options = {
+                    'key': "", // Enter the Key ID generated from the Dashboard
+                    'name': "Educamy",
+                    'description': "Payment For {{course.title}}",
+                    'image': "",
+                    'order_id': "{{order.id}}", 
+                    'callback_url': "https://127.0.01:8000/verify_payment",
+                    'prefill': {
+                        'name':"{{order.notes.name}}",
+                        'email': "{{order.notes.email}}",
+                        'contact': '{{order.notes.phone}}',
+                    },
+                    'theme': {
+                        'color': "#3399cc"
+                    }
+                };
+                var rzpl = new Razorpay(options);
+                rzpl.open();
+            </script>
+            {% endif %}
+
+
+2. views.py
+
+        def CHECKOUT(request, slug):
+           -------
+           context = {
+            'course': course,
+            }    
+            return render(request, 'checkout/checkout.html', context)
+
+3. Settings.py
+
+        KEY_ID = ''
+        KEY_SECRECT = ''
+
+4. model.py
+
+        class Payment(models.Model):
+            -- functions
+
+            def __str__(self):
+                return self.user.first_name + "-" + self.course.title
+
+5. admin.py
+
+        admin.site.register(Payment)
+
+6. cmd in terminal 
+
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver
+
+7. install razorpay
+
+        pip install razorpay
+        pip3 freeze > requirements.txt
+
+8. views.py
+
+        from django.views.decorators.csrf import csrf_exempt
+        from .settings import *
+        import razorpay
+        from time import time
+
+        client = razorpay.Client(auth=(KEY_ID, KEY_SECRECT))
+
+
+        def VERIFY_PAYMENT(request):
+            if request.method == 'POST':
+                data = request.POST
+                try:
+                    client.utility.verify_payment_signature(data)
+                    razorpay_order_id = data['razorpay_order_id']
+                    razorpay_payment_id = data['razorpay_order_id']
+
+                    payment = Payment.objects.get(order_id = razorpay_order_id)
+                    payment.payment_id = razorpay_payment_id
+                    payment.status = True
+
+                    usercourse = UserCourse(
+                        user = payment.user,
+                        course = payment.course
+                    )
+                    usercourse.save()
+                    payment.user_course = usercourse
+                    payment.save()
+
+                    context = {
+                        'data': data,
+                        'payment': payment
+                        
+                    }
+                    return render(request, 'verify_payment/success.html', context)
+                except:
+                    return render(request, 'verify_payment/fail.html')
+
+
+
+9. urls.py
+
+        path('verify_payment', views.VERIFY_PAYMENT, name="verify_payment"),  
+
+10. create folder and file in 'templates:
+
+    verify_payment/success.html
+
+    verify_payment/fail.html

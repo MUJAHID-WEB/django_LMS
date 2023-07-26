@@ -29,3 +29,5 @@ admin.site.register(Lesson)
 admin.site.register(Language)
 
 admin.site.register(UserCourse)
+
+admin.site.register(Payment)
