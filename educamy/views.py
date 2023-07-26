@@ -10,6 +10,9 @@ from .settings import *
 import razorpay
 from time import time
 
+
+client = razorpay.Client(auth=(KEY_ID, KEY_SECRECT))
+
 # Base part
 def BASE(request):
     return render(request, 'base.html')
@@ -140,7 +143,6 @@ def CONTACT_US(request):
     return render(request, 'main/contact_us.html', context)
 
 # Checkout
-client = razorpay.Client(auth=(KEY_ID, KEY_SECRECT))
 
 def CHECKOUT(request, slug):
     course = Course.objects.get(slug = slug)
@@ -169,12 +171,15 @@ def CHECKOUT(request, slug):
             email = request.POST.get('email')
             comments = request.POST.get('comments')
 
-            amount = (course.price * 100)
-            currency = 'USD'
+            # amount = (course.price * 100)
+            amount_cal = course.price - (course.price * course.discount / 100)
+            amount = int(amount_cal) * 100
+
+            currency = 'INR'
             notes = {
-                'name': f' (first_name) (last_name)',
+                'name': f'{first_name} {last_name}',
                 'country' :country,
-                'address': f' (address_1) (address_2)',
+                'address': f'{address_1} {address_2}',
                 'city' : city,
                 'state' :state,
                 'postcode' :postcode,
@@ -204,11 +209,11 @@ def CHECKOUT(request, slug):
         'course': course,
         'order' : order,
         
-    }
-        
+    }    
     return render(request, 'checkout/checkout.html', context)
 
 # Verify Payment
+@csrf_exempt
 def VERIFY_PAYMENT(request):
     if request.method == 'POST':
         data = request.POST

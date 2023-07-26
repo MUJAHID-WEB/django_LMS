@@ -426,24 +426,23 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         var options = {
-            'key': "rzp_test_0sWnG3OmSRb0pq", // Enter the Key ID generated from the Dashboard
-            'amount': ""
-            'name': "Educamy",
-            'description': "Payment For {{course.title}}",
-            'image': "",
-            'order_id': "{{order.id}}", 
-            'callback_url': "https://127.0.01:8000/verify_payment",
-            'prefill': {
-                'name':"{{order.notes.name}}",
-                'email': "{{order.notes.email}}",
-                'contact': '{{order.notes.phone}}',
+            "key": "rzp_test_0sWnG3OmSRb0pq", // Enter the Key ID generated from the Dashboard
+            "name": "Educamy",
+            "description": "Payment For {{course.title}}",
+            "image": "",
+            "order_id": "{{order.id}}", 
+            "callback_url": "http://127.0.01:8000/verify_payment",
+            "prefill": {
+                "name":"{{order.notes.name}}",
+                "email": "{{order.notes.email}}",
+                "contact": '{{order.notes.phone}}',
             },
-            'theme': {
-                'color': "#3399cc"
+            "theme": {
+                "color": "#3399cc"
             }
         };
-        var rzpl = new Razorpay(options);
-        rzpl.open();
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
     </script>
     {% endif %}
 
