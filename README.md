@@ -837,3 +837,64 @@ from .import views
     verify_payment/success.html
 
     verify_payment/fail.html
+
+
+# Without enroll only preview video play
+1. course_details.html
+
+         {% if video.preview == True %}
+        <a href="https://www.youtube.com/watch?v={{video.youtube_id}}" class="rounded" data-fancybox>
+            <div class="ms-4">
+                {{video.title}}
+            </div>
+        </a>
+        {% else %}
+        <div class="ms-4">
+            {{video.title}}
+        </div>
+        {% endif %}
+
+2. base.html
+
+        <script>
+            $(function(){
+                $('[data-toggle-"tooltip"]').tooltip()
+            })
+        </script>
+
+# Video play after Enroll
+1. course_details.html
+
+        {% if enroll_status is not None %}
+        <a href="href="/course/watch_course/{{course.slug}}">
+
+            <div class="ms-4" data-toggle="tooltip" title="Click and Show the video!">
+                {{video.title}}
+            </div>
+
+        </a>
+        {% else %}
+
+            {% if video.preview == True %}
+            <a href="https://www.youtube.com/watch?v={{video.youtube_id}}" class="rounded" data-fancybox>
+                <div class="ms-4">
+                    {{video.title}}
+                </div>
+            </a>
+            {% else %}
+            <div class="ms-4" data-toggle="tooltip" title="Enroll this course!">
+                {{video.title}}
+            </div>
+            {% endif %}
+
+        {% endif %}
+
+2. watch_course.html
+3. urls.py
+
+        path('course/watch_course/<slug:slug>', views.WATCH_COURSE, name="watch_course"), 
+
+4. views.py
+
+        def WATCH_COURSE (request, slug):
+            return render(request, 'course/watch_course.html')

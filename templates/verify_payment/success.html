@@ -3,6 +3,98 @@
 {% load static %}
 {% block content %} 
 
- <h1>Success</h>
+   <!-- SHOP ORDER COMPLETED
+    ================================================== -->
+    <div class="container py-8 py-lg-11">
+        <div class="row">
+            <div class="col-xl-8 mx-xl-auto">
+                <header class="entry-header">
+                    <h1 class="entry-title">Order received</h1>
+                </header>
+
+                <div class="entry-content">
+                    <div class="woocommerce">
+                        <div class="woocommerce-order">
+                            <p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">Thank you. Your order has been received.</p>
+
+                            <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
+                                <li class="woocommerce-order-overview__order order">
+                                    Order ID:
+                                    <strong>{{payment.order_id}}</strong>
+                                </li>
+
+                                <li class="woocommerce-order-overview__date date">
+                                    Date:
+                                    <strong>{{payment.date}}</strong>
+                                </li>
+
+                                <li class="woocommerce-order-overview__total total">
+                                    Total:
+                                    <strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$ {{payment.course.price}}</strong>
+                                </li>
+
+                                {% comment %} <li class="woocommerce-order-overview__payment-method method">
+                                    Payment method:
+                                    <strong>Check payments</strong>
+                                </li> {% endcomment %}
+                            </ul>
+
+                            <section class="woocommerce-order-details">
+                                <h2 class="woocommerce-order-details__title">Order details</h2>
+                                <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
+                                    <thead>
+                                        <tr>
+                                            <th class="woocommerce-table__product-name product-name">Product</th>
+                                            <th class="woocommerce-table__product-table product-total">Total</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr class="woocommerce-table__line-item order_item">
+                                            <td class="woocommerce-table__product-name product-name">
+                                                {{course.title}}
+                                            </td>
+
+                                            <td class="woocommerce-table__product-total product-total">
+                                                <span class="woocommerce-Price-amount amount">
+                                                    <span class="woocommerce-Price-currencySymbol">$</span>
+                                                    {{course.price}}
+                                            </span>
+                                            </td>
+                                        </tr>
+
+                                       
+                                    </tbody>
+
+                                    <tfoot>
+                                        <tr>
+                                            <th scope="row">Discount:</th>
+                                            <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">{{course.discount}}</span>%</span></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th scope="row">Total:</th>
+                                            <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{% discount_calculation course.price course.discount %}</span></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </section>
+
+                            {% comment %} <section class="woocommerce-customer-details">
+                                <h2 class="woocommerce-column__title">Billing address</h2>
+                                <address>
+                                    Mohamed Anas<br>12 Maraicoir street<br>chennai 600001<br>Tamil Nadu, India
+                                    <p class="woocommerce-customer-details--phone">90909090</p>
+                                    <p class="woocommerce-customer-details--email">anas@gmail.com</p>
+                                </address>
+                            </section> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 {% endblock %}

@@ -254,3 +254,7 @@ def MY_COURSE (request):
     }
     return render(request, 'course/my_course.html', context)
 
+# WAtch Course
+
+def WATCH_COURSE (request, slug):
+    return render(request, 'course/watch_course.html')
