@@ -257,24 +257,20 @@ def MY_COURSE (request):
 # WAtch Course
 
 def WATCH_COURSE (request, slug):
-    lecture = request.GET.get('lecture')
-    course_id = Course.objects.get(slug = slug)
     course = Course.objects.filter(slug = slug)
-    # try:
-    #     check_enroll = UserCourse.objects.get(user = request.user, course = course_id)
-    #     video = Video.objects.get(id=lecture)
+    lecture = request.GET.get('lecture')
+ 
+    video = Video.objects.filter(id = lecture)
+
 
     if course.exists():
         course = course.first()
     else:
         return redirect('404')
         
-    # except UserCourse.DoesNotExist:
-    #     return redirect('404')
-    
     context = {
         'course' : course,
-        # 'video' : video,
-        # 'lecture' : lecture,
+        'video' : video,
+   
     }
     return render(request, 'course/watch_course.html', context)

@@ -35,7 +35,7 @@
     <div class="container container-wd">
         <div class="row pt-8 pb-10">
             <div class="col-lg-8">
-                <a href="https://www.youtube.com/watch?v=9I-Y6VQ6tyI" class="d-block sk-thumbnail rounded mb-8" data-fancybox>
+                <a href="https://www.youtube.com/watch?v={{video.youtube_id}}" class="d-block sk-thumbnail rounded mb-8" data-fancybox>
                     <div class="h-90p w-90p rounded-circle bg-white size-30-all d-inline-flex align-items-center justify-content-center position-absolute center z-index-1">
                         <!-- Icon -->
                         <svg width="14" height="16" viewBox="0 0 14 16" xmlns="http://www.w3.org/2000/svg">
@@ -43,8 +43,8 @@
                         </svg>
 
                     </div>
-                    <img class="rounded shadow-light-lg" src="assets/img/products/product-2.jpg" alt="...">
-                </a>
+                    <img class="rounded shadow-light-lg" src="{{video.thumbnail}}" alt="...">
+                </a> 
 
                 <h3 class="">Course Description</h3>
 
@@ -223,10 +223,11 @@
                                         <div class="text-secondary d-flex">
                                             <i class="fa fa-youtube-play" aria-hidden="true" style="color:red;"></i>
                                         </div>
-
-                                        <div class="ms-4">
-                                            {{video.title}}
-                                        </div>
+                                        <a href="?lecture={{video.id}}">
+                                            <div class="ms-4 text-secondary">
+                                                {{video.title}}
+                                            </div>
+                                        </a>
                                     </div>
 
                                     <div class="d-flex align-items-center overflow-auto overflow-md-visible flex-shrink-all">
