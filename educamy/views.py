@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.db.models import Sum
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
 
 from .settings import *
 import razorpay
@@ -96,17 +97,25 @@ def COURSE_DETAILS(request, slug):
     time_duration = Video.objects.filter(course__slug = slug).aggregate(sum = Sum('time_duration'))
     category = Categories.get_all_category(Categories)
 
-    course_id = Course.objects.get(slug = slug)
-    try:
-        enroll_status = UserCourse.objects.get(user= request.user, course= course_id)
-    except UserCourse.DoesNotExist:
-        enroll_status = None
+    # course_id = Course.objects.get(slug = slug)
+    # try:
+    #     enroll_status = UserCourse.objects.get(user= request.user, course= course_id)
+    # except UserCourse.DoesNotExist:
+    #     enroll_status = None
 
-    course = Course.objects.filter(slug = slug)
-    if course.exists():
-        course = course.first()
+    # course = Course.objects.filter(slug = slug)
+    # if course.exists():
+    #     course = course.first()
+    # else:
+    #     return redirect('404')
+
+    course = get_object_or_404(Course, slug=slug)  # Retrieve the course using get_object_or_404
+
+    # Check if the user is authenticated before querying UserCourse
+    if request.user.is_authenticated:
+        enroll_status = UserCourse.objects.filter(user=request.user, course=course).first()
     else:
-        return redirect('404')
+        enroll_status = None
     
     context = {
         'course': course,
